@@ -32,7 +32,7 @@ Apache HTTP server access logs in YYYY-MM-DD.log format.
 
 ## Project Execution Flow
 
-#### Goal is to create an ETL pipeline to Load, Etract and Transform the appache http server access logs. So that we can create analytical reports on the requests.  
+#### Goal is to create an ETL pipeline to Load, Extract and Transform the appache http server access logs. So that we can create analytical reports on the requests.  
 
 #### Steps Executed
 
@@ -66,12 +66,16 @@ raw layer having to_be_processed folder contains the raw logs data loaded daily 
 
 8. Created Amazon rds oracle database, noted the oracle jdbc url.
    
-9. Created a glue studio etl job :sree-etl-tdk-glue-job to transform the parquet files in the cleansed layer by accessing the glue catalog tables with latest partition.
+9. Once data is in cleansed layer, created one more cloud watch trigger to initiate the glue studio etl.
+    
+11. Created a glue studio etl job :sree-etl-tdk-glue-job to transform the parquet files in the cleansed layer by accessing the glue catalog tables with latest partition.
    Perform the aggregation using pyspark scripts and store the final results to oracle db : sree-tdk-oracle-db
 
-10. In pyspark code created two tables in oracle db and stored the data for the following.
+12. In pyspark code created two tables in oracle db and stored the data for the following.
   -tdk_user_requests_table : Contains the http requests counts per user
   -tdk_total_requests_table : Contains current date, total users, total successful requests. 
 
-11. Connect to the oracle db using sql develop to query the analytical tables.
+13. Connect to the oracle db using sql develop to query the analytical tables.
+    
+15. All the above process will be completed before 3:00AM CET, so that visualization application can connect to oracle db and access latest data.
 
