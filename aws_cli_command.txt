@@ -1,0 +1,16 @@
+cd /home/sreedhar/Projects/TDK_project
+
+copy logs data in the above unix folder.
+
+now load this logs data into s3
+
+create the bucket in aws.	
+
+bucket : sree-etl-tdk-raw-data
+
+create a folder structure = sree-etl-tdk-raw-data/to_be_processed/
+
+# to fix the date issue in ubuntu
+sudo ntpdate ntp.ubuntu.com
+
+aws s3 cp /home/sreedhar/Projects/TDK_project/logs/ s3://sree-etl-tdk-raw-data/to_be_processed/ --recursive --exclude "*" --include "*.log"
