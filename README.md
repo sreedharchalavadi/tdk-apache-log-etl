@@ -56,9 +56,10 @@ raw layer having to_be_processed folder contains the raw logs data loaded daily 
   -cleanse the data and creates the pandas dataframe in the desired format.
   -Creates the glue catalog tables : sree-etl-tdk-cleaned-data if not exists and loads the dataframes into the glue catalog table on the current date partition.
   -Converts the data into parquet format and stores in the s3 path : s3://sree-etl-tdk-cleaned-data/cleaned_log/
-  -Removes the log file from the to_be_processed_folder to processed folder
+  -Removes the log file from the to_be_processed_folder and copies to processed folder.
+   NOTE : Added all the environment variables in lambda in these variables: os_input_% 
    
-6. In athena Query the glue catalog tables sree_etl_tdk_clean_db.sree-etl-tdk-cleaned-data to check how the data has been loaded in staging.
+7. In athena Query the glue catalog tables sree_etl_tdk_clean_db.sree-etl-tdk-cleaned-data to check how the data has been loaded in staging.
 
    SELECT count(*) FROM "sree_etl_tdk_clean_db"."sree_tdk_log_clean_table" where user_id is not null limit 10;
    SELECT user_id,count(*) FROM "sree_etl_tdk_clean_db"."sree_tdk_log_clean_table" group by user_id;
